@@ -17,9 +17,12 @@
 		const pomoInfo = {};
 		let task = selectedTaskStore.getSelectedTask();
 		pomoInfo.task = task;
-		console.log('POMOINFO', pomoInfo);
 		runOnStart.forEach((func) => {
-			func(pomoInfo);
+			if (settingsStore.getEnableHooks()[func.name]) {
+				task = selectedTaskStore.getSelectedTask();
+				pomoInfo.task = task;
+				func(pomoInfo);
+			}
 		});
 	}
 
