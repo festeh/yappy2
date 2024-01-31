@@ -8,12 +8,11 @@
 	import Remaining from './remaining.svelte';
 	import ControlButtons from './controlbuttons.svelte';
 
-	let intervalId;
 	let state = IDLE;
 	$: state = $pomodoro.state;
 
 	onMount(async () => {
-		intervalId = setInterval(() => {
+		const intervalId = setInterval(() => {
 			pomodoro.tick();
 		}, 1000);
 

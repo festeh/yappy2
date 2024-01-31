@@ -12,7 +12,8 @@
 		if (seletedTaskId !== null) {
 			const task = tasks.find((task) => task.id === seletedTaskId);
 			if (task) {
-				selectedTaskStore.setSelectedTask(task);
+				const project = projectNames[task.projectId];
+				selectedTaskStore.set({ content: task.content, project });
 			}
 		}
 	}

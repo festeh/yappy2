@@ -7,23 +7,18 @@
 	import Icon from '@iconify/svelte';
 
 	import { settingsStore } from '../stores/settings.js';
-	import { selectedTaskStore } from '../stores/tasks.js';
+	import { initPomo } from '$lib/pomo.js';
 
 	function startTimer() {
-		pomodoro.start();
-		if (!settingsStore.getEnableHooks()) {
-			return;
-		}
-		const pomoInfo = {};
-		let task = selectedTaskStore.getSelectedTask();
-		pomoInfo.task = task;
+		const pomo = initPomo();
 		runOnStart.forEach((func) => {
-			if (settingsStore.getEnableHooks()[func.name]) {
-				task = selectedTaskStore.getSelectedTask();
-				pomoInfo.task = task;
-				func(pomoInfo);
+			if (settingsStore.getSettings()[func.name] === true) {
+				func(pomo);
+			} else {
+				console.log('Hook disabled: ' + func.name);
 			}
 		});
+		pomodoro.start();
 	}
 
 	function pauseTimer() {
@@ -32,9 +27,6 @@
 
 	function resetTimer() {
 		pomodoro.reset();
-		if (!settingsStore.getEnableHooks()) {
-			return;
-		}
 		runOnStop.forEach((func) => {
 			func();
 		});
