@@ -12,7 +12,4 @@ export const selectedTaskStore = {
   subscribe,
   set,
   update,
-  get: () => {
-    return selectedTask
-  },
 }
