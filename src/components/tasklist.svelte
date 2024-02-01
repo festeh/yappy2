@@ -1,12 +1,12 @@
-<script>
-	// @ts-nocheck
+<script lang="ts">
 	import { onMount } from 'svelte';
+	import { onDestroy } from 'svelte';
 	import { getTodayTasks, getProjectName } from '$lib/todoist.ts';
 	import { selectedTaskStore } from '../stores/tasks.js';
 
 	let tasksLoaded = false;
-	let tasks = [];
-	let seletedTaskId = null;
+	let tasks: Array<any> = [];
+	let seletedTaskId: string | null = null;
 
 	$: {
 		if (seletedTaskId !== null) {
@@ -25,10 +25,10 @@
 		for (const task of tasks) {
 			await getProjectNameLocal(task.projectId);
 		}
+	});
 
-		return () => {
-			tasksLoaded = false;
-		};
+	onDestroy(() => {
+		tasksLoaded = false;
 	});
 
 	function selectTask(event) {
@@ -47,7 +47,7 @@
 		seletedTaskId = id;
 	}
 
-	function nextTask(direction) {
+	function nextTask(direction: number) {
 		const index = tasks.findIndex((task) => task.id === seletedTaskId);
 		if (index === -1) {
 			selectFirstTask();
@@ -86,13 +86,17 @@
 
 	let projectNames = {};
 
-	async function getProjectNameLocal(projectId) {
+	async function getProjectNameLocal(projectId: string) {
+    console.log("Getting project name for " + projectId);
 		if (projectId in projectNames) {
+      console.log("Project name already cached", projectNames[projectId]);
 			return projectNames[projectId];
 		}
+    console.log("Project name not cached, fetching");
 		Promise.resolve(getProjectName(projectId)).then((name) => {
 			projectNames = { ...projectNames, [projectId]: name };
 		});
+    console.log("Project name fetched");
 	}
 </script>
 

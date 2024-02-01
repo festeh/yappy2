@@ -1,25 +1,30 @@
-<script>
-	// @ts-nocheck
+<script lang="ts">
 	import { onMount } from 'svelte';
-	import { pomodoro, IDLE } from '../stores/pomodoro.js';
+  import { onDestroy } from 'svelte';
 
 	import TaskList from './tasklist.svelte';
 
 	import Remaining from './remaining.svelte';
 	import ControlButtons from './controlbuttons.svelte';
 
-	let state = IDLE;
-	$: state = $pomodoro.state;
+	import { pomoStates } from '$lib/constants.js';
+	import { engine } from '../stores/engine';
+
+	let state = pomoStates.IDLE;
+	let intervalId: any = null;
+	$: state = $engine.state;
 
 	onMount(async () => {
-		const intervalId = setInterval(() => {
-			pomodoro.tick();
+		intervalId = setInterval(() => {
+			engine.tick();
 		}, 1000);
-
-		return () => {
-			clearInterval(intervalId);
-		};
 	});
+
+	onDestroy(() => {
+		clearInterval(intervalId);
+	});
+
+  console.log($engine);
 </script>
 
 <div class="flex h-full items-start justify-center text-2xl">

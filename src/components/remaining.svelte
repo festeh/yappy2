@@ -1,6 +1,18 @@
-<script>
+<script lang="ts">
 	import { formatTimer } from '$lib/index.js';
-	import { pomodoro } from '../stores/pomodoro.js';
+	import { engine } from '../stores/engine.js';
+	import DurationButton from './duration.svelte';
+	import { changePomoDuration } from '$lib/buttons/duration.js';
+
+	document.addEventListener('keydown', (ev) => {
+		if (ev.key === '+' || ev.key === '-') {
+			changePomoDuration(ev.key);
+		}
+	});
 </script>
 
-<p class="mb-6 text-8xl self-center">{formatTimer($pomodoro.remaining)}</p>
+<div class="flex self-center">
+	<DurationButton title={'-'} />
+	<p class="mb-6 self-center text-8xl">{formatTimer($engine.remaining)}</p>
+	<DurationButton title={'+'} />
+</div>

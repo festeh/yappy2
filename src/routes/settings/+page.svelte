@@ -1,28 +1,18 @@
 <script>
 	import { settingsStore } from '../../stores/settings.js';
-	import { SlideToggle } from '@skeletonlabs/skeleton';
-
-  $: console.log($settingsStore);
-
+	import SettingsHooksGroup from '../../components/settings_hooks_group.svelte';
+  import Slider from '../../components/settings/slider.svelte';
+	$: console.log($settingsStore);
 </script>
 
-<div class="flex flex-col items-center p-8">
+<div class="flex h-full flex-col items-start justify-start p-8">
 	<h1 class="text-xl">Settings</h1>
-	<div class="self-start">
-		<div class="flex flex-col rounded-xl border border-primary-500 p-2">
-			<span class="mb-2 self-center text-sm font-bold text-primary-500"> Enable start hooks </span>
-			<ul class="list">
-				{#each Object.entries($settingsStore) as item}
-					<li>
-						<SlideToggle
-							name="slider-label"
-							active="bg-primary-500"
-							background="bg-gray-500"
-							bind:checked={$settingsStore[item[0]]}>{item[0]}</SlideToggle
-						>
-					</li>
-				{/each}
-			</ul>
-		</div>
+	<div
+		class="flex-grow-1 flex h-full flex-col justify-evenly rounded-xl border border-primary-500 p-2"
+	>
+    <Slider title="Pomo Duration" storeKey="duration" min={5} max={40} step={5} />
+		<SettingsHooksGroup group_name={'runOnStart'} hooks={$settingsStore.runOnStart} />
+		<SettingsHooksGroup group_name={'runOnStop'} hooks={$settingsStore.runOnStop} />
+		<SettingsHooksGroup group_name={'runOnComplete'} hooks={$settingsStore.runOnComplete} />
 	</div>
 </div>
