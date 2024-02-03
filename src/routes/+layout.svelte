@@ -5,9 +5,8 @@
 	import { page } from '$app/stores';
 </script>
 
-<AppShell>
-	<svelte:fragment slot="header">Yappy</svelte:fragment>
-	<svelte:fragment slot="sidebarLeft">
+<div class="flex h-screen max-h-screen">
+	<div class="w-1/5">
 		<AppRail class="text-4xl">
 			<AppRailAnchor href="/" selected={$page.url.pathname === '/'}>
 				<svelte:fragment slot="lead">
@@ -25,6 +24,6 @@
 				</svelte:fragment>
 			</AppRailAnchor>
 		</AppRail>
-	</svelte:fragment>
+	</div>
 	<slot />
-</AppShell>
+</div>

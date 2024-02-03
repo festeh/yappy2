@@ -27,11 +27,9 @@
   console.log($engine);
 </script>
 
-<div class="flex h-full items-start justify-center text-2xl">
-	<div class="flex flex-col">
+	<div class="flex flex-col text-2xl h-screen">
 		<div class="mb-10"></div>
 		<Remaining />
 		<ControlButtons {state} />
 		<TaskList />
 	</div>
-</div>

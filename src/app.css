@@ -4,7 +4,7 @@
 @tailwind utilities;
 
 html, body {
-  @apply overflow-hidden h-full;
+  @apply h-screen overflow-clip;
 }
 
 /* * { */

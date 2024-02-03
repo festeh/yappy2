@@ -10,6 +10,13 @@ export async function initDb() {
   return db
 }
 
+export async function fetchPomos(db: PocketBase,
+  date: Date) {
+    const pomos = await db.collection("yappy").find({
+      date: date.toISOString().slice(0, 10)
+    })
+}
+
 
 
 initDb()
