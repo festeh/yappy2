@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { onDestroy } from 'svelte';
-	import { getTodayTasks, getProjectName } from '$lib/todoist.ts';
-	import { selectedTaskStore } from '../stores/tasks.js';
+	import { getTodayTasks, getProjectName } from '$lib/todoist';
+	import { selectedTaskStore } from '../stores/tasks';
 
 	let tasksLoaded = false;
 	let tasks: Array<any> = [];

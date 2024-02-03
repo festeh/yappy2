@@ -1,4 +1,4 @@
-import { settingsStore } from '../../stores/settings.js';
+import { settingsStore } from '../../stores/settings';
 
 
 export function changePomoDuration(direction: string) {

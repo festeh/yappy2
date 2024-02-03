@@ -1,4 +1,5 @@
 import PocketBase from 'pocketbase'
+import type { PomoEntry } from './types'
 
 
 const email = import.meta.env.VITE_EMAIL
@@ -12,10 +13,27 @@ export async function initDb() {
 
 export async function fetchPomos(db: PocketBase,
   date: Date) {
-    const pomos = await db.collection("yappy").find({
-      date: date.toISOString().slice(0, 10)
-    })
+  const pomos = await db.collection("yappy").find({
+    date: date.toISOString().slice(0, 10)
+  })
 }
+
+export async function fetchPomosBetweenDates(db: PocketBase,
+  from: Date,
+  to: Date): Promise<PomoEntry[]> {
+  // const filter = `time >= ${from.toISOString().slice(0, 10)} && time <= ${to.toISOString().slice(0, 10)}`
+  let toStr = to.toISOString().slice(0, 10)
+  let fromStr = from.toISOString().slice(0, 10)
+  const filter = `time >= "${fromStr}" && time <= "${toStr}"`
+  console.log(filter)
+  const pomosRes = await db.collection("yappy").getFullList({
+    filter
+  })
+  const pomos = pomosRes.map(pomo => { return { status: pomo.status } })
+  return pomos
+}
+
+
 
 
 

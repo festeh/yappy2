@@ -2,7 +2,7 @@
 	export let group_name;
 	export let hooks;
 
-	import { settingsStore } from '../stores/settings.js';
+	import { settingsStore } from '../stores/settings';
 	import { SlideToggle } from '@skeletonlabs/skeleton';
 </script>
 

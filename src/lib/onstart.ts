@@ -1,18 +1,20 @@
 
 import { invoke } from '@tauri-apps/api/tauri';
 import { initDb } from './pocketbase';
+import type { PomoEntry } from './types';
 
 
-async function sendPomoStartedDb(pomo) {
+async function sendPomoStartedDb(pomo: PomoEntry) {
   const db = await initDb()
   const record = await db.collection('yappy').create(pomo);
+  console.log(record);
 }
 
-async function sendPomoStartedDesktop(pomo) {
+async function sendPomoStartedDesktop(_pomo: PomoEntry) {
   console.log("sending notification");
 }
 
-async function sendPomoInfoPi(pomo) {
+async function sendPomoInfoPi(pomo: PomoEntry) {
   console.log("sending info to pi");
   let task = ""
   if (pomo.task) {
@@ -23,7 +25,7 @@ async function sendPomoInfoPi(pomo) {
   fetch(dest, { method: "POST", body: JSON.stringify({ state: "FOCUS", task }) });
 }
 
-async function startAtomicMode(pomo) {
+async function startAtomicMode(_pomo: PomoEntry) {
   await invoke("set_atomic_mode");
 }
 

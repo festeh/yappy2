@@ -1,14 +1,12 @@
 <script lang="ts">
-	import { engine } from '../stores/engine.js';
-	import { runOnStart } from '$lib/onstart.js';
-	import { runOnStop } from '$lib/onstop.js';
+	import { engine } from '../stores/engine';
+	import { runOnStart } from '$lib/onstart';
+	import { runOnStop } from '$lib/onstop';
 	import Icon from '@iconify/svelte';
 
-	import { settingsStore } from '../stores/settings.js';
-	import { initPomo } from '$lib/pomo.js';
-	import { getRunningPomo } from '$lib/pomo.js';
-	import { pomoStates } from '$lib/constants.js';
-	import { pomoMessages } from '$lib/constants.js';
+	import { settingsStore } from '../stores/settings';
+	import { initPomo, getRunningPomo } from '$lib/pomo';
+	import { PomoMessages, pomoStates } from '$lib/types';
 
 	import { get } from 'svelte/store';
 
@@ -34,7 +32,7 @@
 	function resetTimer() {
 		engine.reset();
 		const settings = get(settingsStore);
-		const pomo = getRunningPomo(pomoMessages.CANCELLED);
+		const pomo = getRunningPomo(PomoMessages.CANCELLED);
 		runOnStop.forEach((func) => {
 			if (settings['runOnStop'][func.name] === true) {
 				func(pomo);

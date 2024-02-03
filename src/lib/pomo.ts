@@ -1,30 +1,28 @@
 import { v4 } from 'uuid';
-import { selectedTaskStore } from '../stores/tasks.js';
-import { runningPomoStore } from '../stores/running.js';
+import { selectedTaskStore } from '../stores/tasks';
+import { runningPomoStore } from '../stores/running';
 import { get } from 'svelte/store';
-import { pomoStates } from './constants.js';
-import { pomoMessages } from './constants.js';
+import { PomoMessages, type PomoEntry } from './types';
 
 export function initPomo() {
   const selectedTask = get(selectedTaskStore);
-  const pomo = {
+  const pomo: PomoEntry = {
     pomo_id: v4(),
     task: selectedTask.content,
     project: selectedTask.project,
     metadata: {
       duration: 25,
     },
-    status: undefined,
+    status: PomoMessages.STARTED,
     time: undefined,
   };
-  pomo.status = pomoMessages.STARTED;
   pomo.time = new Date().toISOString();
   runningPomoStore.set(pomo);
   return pomo;
 }
 
 
-export function getRunningPomo(status) {
+export function getRunningPomo(status: PomoMessages) {
   let pomo = get(runningPomoStore);
   pomo.time = new Date().toISOString();
   pomo.status = status;

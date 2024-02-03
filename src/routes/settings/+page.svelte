@@ -1,5 +1,5 @@
 <script>
-	import { settingsStore } from '../../stores/settings.js';
+	import { settingsStore } from '../../stores/settings';
 	import SettingsHooksGroup from '../../components/settings_hooks_group.svelte';
   import Slider from '../../components/settings/slider.svelte';
 	$: console.log($settingsStore);

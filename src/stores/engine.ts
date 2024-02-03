@@ -1,8 +1,7 @@
 import { writable } from 'svelte/store';
 import { runOnComplete } from '$lib/oncomplete';
 import { getRunningPomo } from '$lib/pomo';
-import { pomoStates } from '$lib/constants';
-import { pomoMessages } from '$lib/constants';
+import { PomoMessages, pomoStates } from '$lib/types';
 import { get } from 'svelte/store';
 import { settingsStore } from './settings';
 
@@ -26,7 +25,7 @@ function updateTimer(timer) {
     timer.state = pomoStates.IDLE
     timer.remaining = getDuration();
     const settings = get(settingsStore);
-    const pomo = getRunningPomo(pomoMessages.FINISHED);
+    const pomo = getRunningPomo(PomoMessages.FINISHED);
     for (const func of runOnComplete) {
       if (settings.runOnComplete[func.name]) {
         func(pomo);
