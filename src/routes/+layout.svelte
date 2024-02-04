@@ -6,7 +6,7 @@
 </script>
 
 <div class="flex h-screen max-h-screen">
-	<div class="w-1/5">
+	<div class="">
 		<AppRail class="text-4xl">
 			<AppRailAnchor href="/" selected={$page.url.pathname === '/'}>
 				<svelte:fragment slot="lead">
@@ -25,5 +25,7 @@
 			</AppRailAnchor>
 		</AppRail>
 	</div>
-	<slot />
+  <div class="flex justify-center w-full">
+    <slot></slot>
+  </div>
 </div>

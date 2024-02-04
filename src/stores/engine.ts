@@ -7,7 +7,6 @@ import { settingsStore } from './settings';
 
 
 function getDuration() {
-  console.log(get(settingsStore).duration, 'duration');
   return get(settingsStore).duration * 60;
 }
 

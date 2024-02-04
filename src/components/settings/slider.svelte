@@ -1,6 +1,8 @@
-<script>
+<script lang="ts">
+	import type { Settings } from '../../stores/settings';
+
 	export let title = '';
-	export let storeKey = '';
+	export let storeKey: keyof Settings = 'duration';
 	export let min = 0;
 	export let max = 60;
 	export let step = 1;

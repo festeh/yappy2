@@ -4,6 +4,7 @@
 
 	import TaskList from './tasklist.svelte';
 
+	import PomoInfoBar from './main/pomoinfobar.svelte';
 	import Remaining from './remaining.svelte';
 	import ControlButtons from './controlbuttons.svelte';
 
@@ -27,9 +28,11 @@
 	console.log($engine);
 </script>
 
-<div class="flex h-screen flex-col text-2xl">
-	<div class="mb-10"></div>
-	<Remaining />
-	<ControlButtons {state} />
+<div class="flex h-screen flex-col justify-evenly text-xl">
+	<PomoInfoBar />
+	<div class="flex flex-col">
+		<Remaining />
+		<ControlButtons {state} />
+	</div>
 	<TaskList />
 </div>

@@ -61,7 +61,7 @@
 	});
 </script>
 
-<div class="mb-8 flex flex-row justify-evenly self-stretch text-6xl">
+<div class="flex flex-row justify-evenly self-stretch text-6xl">
 	{#if state !== pomoStates.RUNNING}
 		<button on:click={startTimer}>
 			<Icon icon="fa-regular:play-circle" class="h-full text-green-500" />

@@ -105,7 +105,7 @@
 {#if !tasksLoaded}
 	<p>Tasks loading...</p>
 {:else}
-	<div class="flex flex-grow flex-col overflow-auto">
+	<div class="flex flex-col overflow-auto max-h-[50vh]">
 		<button
 			class="btn btn-sm flex-grow-0 self-end rounded-xl border border-primary-500 pl-2 pr-2 text-sm font-bold"
 			on:click={resetTasks}

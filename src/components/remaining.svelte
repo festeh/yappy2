@@ -14,6 +14,6 @@
 
 <div class="flex self-center">
 	<DurationButton title={'-'} />
-	<p class="mb-6 self-center text-8xl">{formatTimer($engine.remaining)}</p>
+	<p class="self-center text-6xl">{formatTimer($engine.remaining)}</p>
 	<DurationButton title={'+'} />
 </div>
