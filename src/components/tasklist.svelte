@@ -3,6 +3,8 @@
 	import { onDestroy } from 'svelte';
 	import { getTodayTasks, getProjectName } from '$lib/todoist';
 	import { selectedTaskStore } from '../stores/tasks';
+	import { projectsStore } from '../stores/projects';
+	import { get } from 'svelte/store';
 
 	let tasksLoaded = false;
 	let tasks: Array<any> = [];
@@ -12,10 +14,28 @@
 		if (selectedTaskId !== null) {
 			const task = tasks.find((task) => task.id === selectedTaskId);
 			if (task) {
-				const project = projectNames[task.projectId];
+				const project = $projectsStore[task.projectId];
 				selectedTaskStore.set({ content: task.content, project });
 			}
 		}
+	}
+
+	async function getProjectNameLocal(projectId: string) {
+		const projectNames = get(projectsStore);
+		console.log('Getting project name for ' + projectId);
+		const projectName = projectNames[projectId];
+		if (projectName !== undefined) {
+			console.log('Project name already cached', projectName);
+			return projectName;
+		}
+		console.log('Project name not cached, fetching');
+		Promise.resolve(getProjectName(projectId)).then((name) => {
+			projectsStore.update((names) => {
+				names[projectId] = name!;
+				return names;
+			});
+		});
+		console.log('Project name fetched');
 	}
 
 	onMount(async () => {
@@ -45,7 +65,7 @@
 		if (tasks.length === 0) return;
 		const id = tasks[tasks.length - 1].id;
 		selectedTaskId = id;
-    // scroll to the bottom
+		// scroll to the bottom
 	}
 
 	function nextTask(direction: number) {
@@ -62,7 +82,9 @@
 				selectLastTask();
 			}
 		}
-    document.getElementById(selectedTaskId).scrollIntoView({ behavior: 'smooth', block: 'center' });
+		document
+			?.getElementById(selectedTaskId!)
+			?.scrollIntoView({ behavior: 'smooth', block: 'center' });
 	}
 
 	document.addEventListener('keydown', (ev) => {
@@ -85,27 +107,12 @@
 		tasks = await getTodayTasks();
 		tasksLoaded = true;
 	}
-
-	let projectNames = {};
-
-	async function getProjectNameLocal(projectId: string) {
-		console.log('Getting project name for ' + projectId);
-		if (projectId in projectNames) {
-			console.log('Project name already cached', projectNames[projectId]);
-			return projectNames[projectId];
-		}
-		console.log('Project name not cached, fetching');
-		Promise.resolve(getProjectName(projectId)).then((name) => {
-			projectNames = { ...projectNames, [projectId]: name };
-		});
-		console.log('Project name fetched');
-	}
 </script>
 
 {#if !tasksLoaded}
 	<p>Tasks loading...</p>
 {:else}
-	<div class="flex flex-col overflow-auto max-h-[50vh]">
+	<div class="flex max-h-[50vh] flex-col overflow-auto">
 		<button
 			class="btn btn-sm flex-grow-0 self-end rounded-xl border border-primary-500 pl-2 pr-2 text-sm font-bold"
 			on:click={resetTasks}
@@ -120,7 +127,7 @@
 					<span class="flex-auto" on:click={selectTask} role="menuitem" id={task.id}>
 						{task.content}
 					</span>
-					<span class="text-sm text-gray-400"> {projectNames[task.projectId]} </span>
+					<span class="text-sm text-gray-400"> {$projectsStore[task.projectId]} </span>
 				</li>
 			{/each}
 		</ul>
