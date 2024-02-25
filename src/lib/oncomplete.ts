@@ -1,3 +1,4 @@
+import { bumpPomoCountsStore } from "../stores/pomocounts";
 import { initDb } from "./pocketbase";
 import type { PomoEntry } from "./types";
 
@@ -6,7 +7,13 @@ async function sendPomoDoneDb(pomo: PomoEntry) {
   await db.collection('yappy').create(pomo);
 }
 
+async function bumpPomoCounts() {
+  await bumpPomoCountsStore();
+}
+
+
 
 export const runOnComplete = [
-  sendPomoDoneDb
+  sendPomoDoneDb,
+  bumpPomoCounts
 ];

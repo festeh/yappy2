@@ -1,6 +1,6 @@
 <script>
 	import '../app.css';
-	import { AppRail, AppRailAnchor, AppShell } from '@skeletonlabs/skeleton';
+	import { AppRail, AppRailAnchor } from '@skeletonlabs/skeleton';
 	import Icon from '@iconify/svelte';
 	import { page } from '$app/stores';
 </script>
