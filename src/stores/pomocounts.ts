@@ -1,3 +1,4 @@
+import { countSuccesses } from "$lib/analytics";
 import { getDaysBefore, getToday } from "$lib/dates";
 import { fetchPomosBetweenDates, initDb } from "$lib/pocketbase";
 import { writable } from "svelte/store";
@@ -29,9 +30,9 @@ export async function pullPomoCountsStore() {
   const pomosWeek = await fetchPomosBetweenDates(db, fromWeek, to);
   const pomosMonth = await fetchPomosBetweenDates(db, fromMonth, to);
   pomoCountsStore.set({
-    today: pomosToday.length,
-    week: pomosWeek.length,
-    month: pomosMonth.length,
+    today: countSuccesses(pomosToday),
+    week: countSuccesses(pomosWeek),
+    month: countSuccesses(pomosMonth),
   });
 
   return writable(0);
