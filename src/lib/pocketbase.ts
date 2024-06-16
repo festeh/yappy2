@@ -6,7 +6,7 @@ const dbName = import.meta.env.VITE_DB_NAME
 const email = import.meta.env.VITE_EMAIL
 const password = import.meta.env.VITE_DB_PASSWORD
 
-const pomoCollection = import.meta.env.VITE_POMO_COLLECTION
+export const pomoCollection = import.meta.env.VITE_POMO_COLLECTION
 
 export async function initDb() {
   const db = new PocketBase(dbName)

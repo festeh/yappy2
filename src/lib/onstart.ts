@@ -1,13 +1,12 @@
-
 import { invoke } from '@tauri-apps/api/tauri';
-import { initDb } from './pocketbase';
+import { initDb, pomoCollection } from './pocketbase';
 import type { PomoEntry } from './types';
 import { get } from 'svelte/store';
 import { settingsStore, type Settings } from '../stores/settings';
 
 async function sendPomoStartedDb(pomo: PomoEntry) {
   const db = await initDb()
-  const record = await db.collection('yappy').create(pomo);
+  const record = await db.collection(pomoCollection).create(pomo);
   console.log(record);
 }
 

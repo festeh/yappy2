@@ -1,4 +1,4 @@
-import { initDb } from "./pocketbase";
+import { initDb, pomoCollection } from "./pocketbase";
 import type { PomoEntry } from "./types";
 
 
@@ -8,7 +8,7 @@ async function sendPomoStoppedPi(_pomo: PomoEntry) {
 
 async function sendPomoStoppedDb(pomo: PomoEntry) {
   const db = await initDb()
-  const record = await db.collection('yappy').create(pomo);
+  const record = await db.collection(pomoCollection).create(pomo);
   console.log(record, "sent stopped");
 }
 
