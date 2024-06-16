@@ -1,7 +1,7 @@
 import PocketBase from 'pocketbase'
 import { PomoEntry } from './types'
 
-const dbName = import.meta.env.VITE_DB_NAME
+const dbUrl = import.meta.env.VITE_DB_URL
 
 const email = import.meta.env.VITE_EMAIL
 const password = import.meta.env.VITE_DB_PASSWORD
@@ -9,7 +9,7 @@ const password = import.meta.env.VITE_DB_PASSWORD
 export const pomoCollection = import.meta.env.VITE_POMO_COLLECTION
 
 export async function initDb() {
-  const db = new PocketBase(dbName)
+  const db = new PocketBase(dbUrl)
   const authData = await db.admins.authWithPassword(email, password)
   return db
 }

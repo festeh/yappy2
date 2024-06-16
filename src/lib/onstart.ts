@@ -36,6 +36,6 @@ export const runOnStart = [
   sendPomoStartedDb,
   sendPomoStartedDesktop,
   sendPomoInfoPi,
-  startAtomicMode
+  // startAtomicMode
 ];
 
