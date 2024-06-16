@@ -1,4 +1,3 @@
-import { v4 } from 'uuid';
 import { selectedTaskStore } from '../stores/tasks';
 import { runningPomoStore } from '../stores/running';
 import { get } from 'svelte/store';
@@ -7,7 +6,6 @@ import { PomoMessages, type PomoEntry } from './types';
 export function initPomo() {
   const selectedTask = get(selectedTaskStore);
   const pomo: PomoEntry = {
-    pomo_id: v4(),
     task: selectedTask.content,
     project: selectedTask.project,
     metadata: {

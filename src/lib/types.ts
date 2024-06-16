@@ -15,15 +15,13 @@ interface PomoMetadata {
 }
 
 export class PomoEntry {
-  pomo_id: string | undefined
   time: string | undefined
   task: string | undefined
   project: string | undefined
   status: PomoMessages | undefined
   metadata: PomoMetadata | undefined
 
-  constructor({ pomo_id, time, task, project, status, metadata }: PomoEntry) {
-    this.pomo_id = pomo_id;
+  constructor({ time, task, project, status, metadata }: PomoEntry) {
     this.time = time;
     this.task = task;
     this.project = project;
