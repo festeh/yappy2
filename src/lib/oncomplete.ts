@@ -1,4 +1,4 @@
-import { bumpPomoCountsStore } from "../stores/pomocounts";
+import { bumpPomoCountsStore, pullPomoCountsStore } from "../stores/pomocounts";
 import { initDb, pomoCollection } from "./pocketbase";
 import type { PomoEntry } from "./types";
 import { invoke } from "@tauri-apps/api/tauri";
@@ -6,10 +6,7 @@ import { invoke } from "@tauri-apps/api/tauri";
 async function sendPomoDoneDb(pomo: PomoEntry) {
   const db = await initDb()
   await db.collection(pomoCollection).create(pomo);
-}
-
-async function bumpPomoCounts(_pomo: PomoEntry) {
-  await bumpPomoCountsStore();
+  await pullPomoCountsStore(db);
 }
 
 async function sendCompleteNotification(_pomo: PomoEntry) {
@@ -19,6 +16,5 @@ async function sendCompleteNotification(_pomo: PomoEntry) {
 
 export const runOnComplete = [
   sendPomoDoneDb,
-  bumpPomoCounts,
   sendCompleteNotification
 ];

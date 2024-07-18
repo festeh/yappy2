@@ -18,14 +18,11 @@ function initPomoCountsStore() {
   return writable(pomos);
 }
 
-export async function pullPomoCountsStore() {
-
-  const db = await initDb();
+export async function pullPomoCountsStore(db) {
   const to = getToday();
   const fromMonth = getDaysBefore(30 - 1);
   const fromWeek = getDaysBefore(7 - 1);
   const fromToday = getDaysBefore(1 - 1);
-
   const pomosToday = await fetchPomosBetweenDates(db, fromToday, to);
   const pomosWeek = await fetchPomosBetweenDates(db, fromWeek, to);
   const pomosMonth = await fetchPomosBetweenDates(db, fromMonth, to);
@@ -34,8 +31,7 @@ export async function pullPomoCountsStore() {
     week: countSuccesses(pomosWeek),
     month: countSuccesses(pomosMonth),
   });
-
-  return writable(0);
+  return;
 }
 
 export async function bumpPomoCountsStore() {

@@ -2,11 +2,12 @@
 	import { onMount } from 'svelte';
 	import PomoInfo from './pomoinfo.svelte';
 	import { pomoCountsStore, pullPomoCountsStore } from '../../stores/pomocounts';
+	import { initDb } from '$lib/pocketbase';
 
 	onMount(async () => {
-		await pullPomoCountsStore();
+		const db = await initDb();
+		await pullPomoCountsStore(db);
 	});
-
 </script>
 
 <div class="flex justify-evenly text-sm">
