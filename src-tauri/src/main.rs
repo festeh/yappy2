@@ -1,5 +1,7 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
+use std::process::Command;
+
 use tauri::{CustomMenuItem, SystemTray, SystemTrayEvent, SystemTrayMenu};
 
 #[tauri::command]
@@ -11,6 +13,12 @@ async fn set_atomic_mode() {
     let page: &str = "https://ya.ru/atomic";
     let res = client.get(page).send().await.unwrap();
     println!("Status: {}", res.status());
+}
+
+#[tauri::command]
+async fn notify(message: String) {
+    // call notify-send with the message
+    let _ = Command::new("notify-send").arg(message).output();
 }
 
 fn main() {
@@ -32,7 +40,7 @@ fn main() {
                 }
             }
         })
-        .invoke_handler(tauri::generate_handler![set_atomic_mode])
+        .invoke_handler(tauri::generate_handler![set_atomic_mode, notify])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
