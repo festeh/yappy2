@@ -10,8 +10,9 @@ async function sendPomoStartedDb(pomo: PomoEntry) {
   console.log(record);
 }
 
-async function sendPomoStartedDesktop(_pomo: PomoEntry) {
+async function sendStartNotification(_pomo: PomoEntry) {
   console.log("sending notification");
+  await invoke("notify", {message: "Pomo started"});
 }
 
 async function sendPomoInfoPi(pomo: PomoEntry) {
@@ -34,7 +35,7 @@ async function startAtomicMode(_pomo: PomoEntry) {
 
 export const runOnStart = [
   sendPomoStartedDb,
-  sendPomoStartedDesktop,
+  sendStartNotification,
   sendPomoInfoPi,
   // startAtomicMode
 ];
