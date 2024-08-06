@@ -13,6 +13,11 @@ async fn set_atomic_mode() {
     println!("Status: {}", res.status());
 }
 
+#[tauri::command]
+async fn update_ags_status(status: String) {
+    println!("Status: {}", status);
+}
+
 fn main() {
     let menu = SystemTrayMenu::new()
         .add_item(CustomMenuItem::new("quit", "Quit"))
@@ -32,7 +37,7 @@ fn main() {
                 }
             }
         })
-        .invoke_handler(tauri::generate_handler![set_atomic_mode])
+        .invoke_handler(tauri::generate_handler![set_atomic_mode, update_ags_status])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
