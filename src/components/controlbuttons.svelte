@@ -22,7 +22,7 @@
 				console.log('Hook disabled: ' + func.name);
 			}
 		});
-		engine.start();
+		engine.start(pomo);
 	}
 
 	function pauseTimer() {

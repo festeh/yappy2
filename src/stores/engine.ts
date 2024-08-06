@@ -1,7 +1,8 @@
 import { writable } from 'svelte/store';
+import { runOnStart } from '$lib/onstart';
 import { runOnComplete } from '$lib/oncomplete';
 import { getRunningPomo } from '$lib/pomo';
-import { PomoMessages, pomoStates } from '$lib/types';
+import { PomoEntry, PomoMessages, pomoStates } from '$lib/types';
 import { get } from 'svelte/store';
 import { settingsStore } from './settings';
 
@@ -48,20 +49,18 @@ function updateState(state: PomoState) {
 const createPomodoroStore = () => {
   const { subscribe, set, update } = writable(initialState);
 
-  // runOnStart, runOnComplete, runOnStop;
-
   return {
     subscribe,
-    start: (task: string, project: string) => {
+    start: (pomo: PomoEntry) => {
       const settings = get(settingsStore);
       runOnStart.forEach((func) => {
         if (settings['runOnStart'][func.name] === true) {
-          func();
+          func(pomo);
         } else {
           console.log('Hook disabled: ' + func.name);
         }
       });
-      update(state => ({ ...state, status: pomoStates.RUNNING, task, project }))
+      update(state => ({ ...state, status: pomoStates.RUNNING, task: pomo.task || "", project: pomo.project || "" }))
     },
     pause: () => update(state => ({ ...state, status: pomoStates.PAUSED })),
     reset: () => set(initialState),
