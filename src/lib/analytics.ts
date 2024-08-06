@@ -1,4 +1,3 @@
-import { quadIn } from "svelte/easing";
 import { getNextDay, getWeekday } from "./dates";
 import { PomoMessages, type PomoEntry } from "./types";
 

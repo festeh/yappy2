@@ -1,10 +1,7 @@
 // place files you want to import through the `$lib` alias in this folder.
 //
 
-/**
-* @param {number} seconds
-*/
-export function formatTimer(seconds) {
+export function formatTimer(seconds: number) {
   let minutes = Math.floor(seconds / 60);
   let remainingSeconds = seconds % 60;
 
